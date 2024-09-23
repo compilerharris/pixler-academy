@@ -1,0 +1,67 @@
+Steps to create github account and new repository.
+
+Step 1: Create a GitHub Account:
+    a. Go to GitHub: Visit https://github.com.
+    b. Sign Up: Click on the "Sign up" button in the top-right corner.
+    c. Fill in Details: Enter your email, password, and username, then click "Create account".
+    d. Verify Email: GitHub will send you an email to verify your account. Follow the instructions to verify it.
+
+Step 2: Create Your First Repository:
+    a. Login to GitHub: After verifying, log in to your GitHub account.
+    b. Create a Repository:
+        - Click on the “+” icon in the top-right corner and choose “New repository”.
+        - Name your repository (e.g., "my-project").
+        - Choose if the repo should be public or private.
+        - Initialize with README: (optional) You can check this option to create a README file automatically.
+        - Click Create repository.
+
+Step 3: Install Git on Windows:
+    a. Download Git:
+        - Go to https://git-scm.com/download/win and download the latest version of Git for Windows.
+    b. Install Git:
+        - Run the installer.
+        - During the setup, choose Git Bash (which is a terminal) when asked about the default terminal to use with Git.
+        - You can leave the rest of the options as default.
+    c. Verify Installation:
+        - Open Git Bash from the Start Menu or search it in the Windows search bar.
+        - Run the following command to ensure Git is installed:
+            `git --version`
+
+Step 4: Set Up Git on Your Local System:
+    a. Configure Git:
+        - Open Git Bash and run these commands to configure your user details:
+            `git config --global user.name "Your Name"`
+            `git config --global user.email "youremail@example.com"`
+
+Step 5: Link Your Local Folder to GitHub Repo:
+    a. Go to your Project Folder:
+        - On Windows, open File Explorer and navigate to the folder where your project is stored.
+        - Right-click inside the folder and select Git Bash Here to open the terminal in your project directory.
+    b. Initialize Git in the Folder:
+        - In Git Bash, run the following command to initialize Git in your folder:
+            `git init`
+    c. Link to GitHub Repository:
+        - In Git Bash, link your local folder to the GitHub repository by running:
+            `git remote add origin https://github.com/yourusername/my-project.git`
+    d. Stage Your Files:
+        - To add your files to Git, run:
+            `git add .`
+    e. Commit the Files:
+        - Commit the changes locally:
+            `git commit -m "Initial commit"`
+    f. Push to GitHub:
+        - Push the committed files to GitHub:
+            `git push -u origin master`
+
+Step 6: Push Daily Updates to GitHub:
+    a. Make Changes:
+        - Continue working on your project.
+    b. Stage Your Changes:
+        - Whenever you're ready to push your updates, run:
+            `git add .`
+    c. Commit the Changes:
+        - Commit with a meaningful message:
+            `git commit -m "Describe your changes"`
+    d. Push the Changes:
+        - Push your changes to GitHub:
+            `git push`
