@@ -1,0 +1,10 @@
+Introduction to React
+
+1. What is React? - Brief introduction and benefits
+2. Setting up React Environment - Installing Node.js, npm, and creating a React app using create-react-app
+3. JSX Syntax - Writing HTML-like syntax in JavaScript
+4. Components - Introduction to functional components and their structure
+
+Activity:
+
+1. 

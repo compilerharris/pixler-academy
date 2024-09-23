@@ -1,0 +1,33 @@
+ - Introduction to React:
+
+1. What is React? - Brief introduction and benefits
+    a. Introduction: React is a free and open-source front-end JavaScript library for building user interfaces based on components.
+    b. Developed by: It is by Facebook/Meta.
+    c. Latest version: v18.2.0.
+2. Setting up React Environment - Installing Node.js, npm, and creating a React app using create-react-app
+    a. Install and check version of:
+        i. Node
+        ii. npm
+    b. How to create react app: npx create-react-app {my-app}
+3. JSX Syntax - Writing HTML-like syntax in JavaScript
+4. Components - Introduction to functional components and their structures
+    a. Import components
+    b. Export components 
+5. Props - Passing data to components
+6. State - Managing state within components
+
+- Building a Landing Page:
+
+1. Styling Components - Inline styles and CSS files
+2. Handling Events - Handling user inputs (clicks, form submissions)
+3. Basic Routing with React Router - Introduction to routing and creating a single-page landing page
+4. Using Images and Media in React - Embedding and optimizing media
+5. Responsive Design - Using CSS frameworks (Bootstrap/Tailwind) for responsiveness
+
+- Activity:
+
+1. Basic Calculator
+2. Result Calculator
+3. Landing Page
+4. Micro Website
+5. Website
