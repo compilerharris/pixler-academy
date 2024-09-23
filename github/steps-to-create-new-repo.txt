@@ -27,9 +27,19 @@ Step 3: Install Git on Windows:
         - Run the following command to ensure Git is installed:
             `git --version`
 
+(Skip this if you are using Windows)
+Step 3: Install Git on macOS using Homebrew:
+    a. Install Homebrew (if not already installed):
+        - Open Terminal and run:
+            `/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"`
+        - After installation, run:
+            `brew install git`
+        - Verify Git Installation: Check if Git is installed correctly:
+            `git --version`
+
 Step 4: Set Up Git on Your Local System:
     a. Configure Git:
-        - Open Git Bash and run these commands to configure your user details:
+        - Open Git Bash (or Terminal if using macOS) and run these commands to configure your user details:
             `git config --global user.name "Your Name"`
             `git config --global user.email "youremail@example.com"`
 
