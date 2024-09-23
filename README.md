@@ -1,4 +1,4 @@
-# pixler-academy
+# Pixler Academy
 
 
 ## Stay in touch
