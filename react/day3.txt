@@ -1,0 +1,63 @@
+2. Setting up React Environment - Installing Node.js, npm, and creating a React app using create-react-app
+    a. Install and check version of:
+        i. Node
+        ii. npm
+    b. How to create react app: npx create-react-app {my-app}
+    c. Directory structure
+        my-app
+        ├── README.md
+        ├── node_modules
+        ├── package.json
+        ├── .gitignore
+        ├── public
+        │   ├── favicon.ico
+        │   ├── index.html
+        │   ├── logo192.png
+        │   ├── logo512.png
+        │   ├── manifest.json
+        │   └── robots.txt
+        └── src
+            ├── App.css
+            ├── App.js
+            ├── App.test.js
+            ├── index.css
+            ├── index.js
+            ├── logo.svg
+            ├── serviceWorker.js
+            └── setupTests.js
+3. JSX Syntax - Writing HTML-like syntax in JavaScript
+    - Practice project
+
+    code:
+    Profile.js
+        ***
+            import React from "react";
+
+            const Profile = () => {
+                return (
+                    <div className='profile'>
+                    <p className='name'>Haris</p>
+                    <img className='profile-img' src='https://imgd.aeplcdn.com/370x208/n/cw/ec/130591/fronx-exterior-right-front-three-quarter-109.jpeg?isig=0&q=80' alt='' />
+                    <p className='about'>I am a developer</p>
+                    </div>
+                )
+            }
+
+            export default Profile;
+        ***
+    App.js
+        ***
+            import './App.css';
+            import Profile from './components/Profile';
+
+            function App() {
+            return (
+                <div>
+                <h1>Profile</h1>
+                <Profile />
+                </div>
+            );
+            }
+
+            export default App;
+        ***

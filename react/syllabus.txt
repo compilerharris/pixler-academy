@@ -106,6 +106,41 @@ Step 5: Link Your Local Folder to GitHub Repo:
             └── setupTests.js
 3. JSX Syntax - Writing HTML-like syntax in JavaScript
     - Practice project
+
+    code:
+    Profile.js
+        ***
+            import React from "react";
+
+            const Profile = () => {
+                return (
+                    <div className='profile'>
+                    <p className='name'>Haris</p>
+                    <img className='profile-img' src='https://imgd.aeplcdn.com/370x208/n/cw/ec/130591/fronx-exterior-right-front-three-quarter-109.jpeg?isig=0&q=80' alt='' />
+                    <p className='about'>I am a developer</p>
+                    </div>
+                )
+            }
+
+            export default Profile;
+        ***
+    App.js
+        ***
+            import './App.css';
+            import Profile from './components/Profile';
+
+            function App() {
+            return (
+                <div>
+                <h1>Profile</h1>
+                <Profile />
+                </div>
+            );
+            }
+
+            export default App;
+        ***
+
     code:
     app.js
     ***
