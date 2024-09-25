@@ -105,6 +105,55 @@ Step 5: Link Your Local Folder to GitHub Repo:
             ├── serviceWorker.js
             └── setupTests.js
 3. JSX Syntax - Writing HTML-like syntax in JavaScript
+    - Practice project
+    code:
+    app.js
+    ***
+        import './App.css';
+        import React, { useState } from 'react';
+        import CustomButton from './components/CustomButton';
+
+        function App() {
+            const [buttonClicked, setButtonClicked] = useState(false);
+
+            const handleClick = () => {
+                setButtonClicked(true);
+                alert('Button clicked!');
+            };
+
+            return (
+                <div className="App">
+                    <h1>Welcome to My React App</h1>
+                    <CustomButton 
+                        text="Click Me" 
+                        onClick={handleClick} 
+                        className="primary-button" 
+                    />
+                    {buttonClicked && <p>You've clicked the button!</p>}
+                </div>
+            );
+        }
+
+        export default App;
+    ***
+    CustomButton.js
+    ***
+        import React from 'react';
+
+        const CustomButton = ({ text, onClick, disabled, className }) => {
+            return (
+                <button 
+                    className={`custom-button ${className}`} 
+                    onClick={onClick} 
+                    disabled={disabled}
+                >
+                    {text}
+                </button>
+            );
+        };
+
+        export default CustomButton;
+    ***
 4. Components - Introduction to functional components and their structures
     a. Import components
     b. Export components 
