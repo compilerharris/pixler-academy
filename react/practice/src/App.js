@@ -4,8 +4,8 @@ import Profile from './components/Profile';
 function App() {
   return (
     <div>
-      <h1>Profile</h1>
-      <Profile />
+      <h1>Profiles</h1>
+      <Profile name={"samit"} />
     </div>
   );
 }

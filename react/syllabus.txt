@@ -141,6 +141,47 @@ Step 5: Link Your Local Folder to GitHub Repo:
             export default App;
         ***
 
+4. Props - React Props are like function arguments in JavaScript and attributes in HTML.
+
+    How to pass and use Props in React.
+
+    code:
+        App.js
+            ***
+                import './App.css';
+                import Profile from './components/Profile';
+
+                function App() {
+                return (
+                    <div>
+                    <h1>Profiles</h1>
+                    <Profile name={"samit"} />
+                    </div>
+                );
+                }
+
+                export default App;
+            ***
+        Profile.js
+            ***
+                import React from "react";
+
+                const Profile = ({name}) => {
+                    return (
+                        <div className='profile'>
+                        <p className='name'>{name}</p>
+                        <img className='profile-img' src='https://imgd.aeplcdn.com/370x208/n/cw/ec/130591/fronx-exterior-right-front-three-quarter-109.jpeg?isig=0&q=80' alt='' />
+                        <p className='about'>I am a developer</p>
+                        </div>
+                    )
+                }
+
+                export default Profile;
+            ***
+
+
+
+
     code:
     app.js
     ***

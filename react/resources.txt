@@ -2,7 +2,7 @@ Students IP:
 Samit -> http://192.168.0.146:3000/
 Muizz -> http://192.168.0.132:3000/
 Huzaif -> http://192.168.0.120:3000/
-rehan -> http://192.168.0.:3000/
+rehan -> http://192.168.0.154:3000/
 
 Githup Website:
 https://github.com
