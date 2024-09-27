@@ -143,8 +143,18 @@ Step 5: Link Your Local Folder to GitHub Repo:
 
 4. Props - React Props are like function arguments in JavaScript and attributes in HTML.
 
-    How to pass and use Props in React.
+    - How to pass and use Props in React.
+    - var, let and const.
+    - array, object.
+    - map and its uses.
+    - concatination.
+    - unique key for each chinld of react element.
+    - Passing data to components
 
+5. Components - Introduction to functional components and their structures
+    a. Import components
+    b. Export components 
+    
     code:
         App.js
             ***
@@ -152,26 +162,48 @@ Step 5: Link Your Local Folder to GitHub Repo:
                 import Profile from './components/Profile';
 
                 function App() {
-                return (
-                    <div>
-                    <h1>Profiles</h1>
-                    <Profile name={"samit"} />
-                    </div>
-                );
+                    const profiles = [
+                        {
+                        name:"Samit",
+                        img:"https://t3.ftcdn.net/jpg/02/16/60/42/360_F_216604243_4yvQhIudgknAWu04Ob7aSOu6BdIfhBNb.jpg",
+                        about:"I am a web designer",
+                        },
+                        {
+                        name:"Huzaif",
+                        img:"https://www.motoroids.com/wp-content/uploads/2015/04/Fast-and-Furious-Toyota-Supra-10.jpg",
+                        },
+                        {
+                        name:"Rehan",
+                        img:"https://img.lovepik.com/photo/48007/1949.jpg_wh860.jpg",
+                        about:"I am a developer",
+                        }
+                    ];
+
+                    return (
+                        <div>
+                        <h1>Profiles</h1>
+                        {
+                            profiles.map((profile, key) => {
+                            return <Profile key={key} name={profile.name} imgUrl={profile.img} about={profile.about} />
+                            })
+                        }
+                        </div>
+                    );
                 }
 
                 export default App;
             ***
+
         Profile.js
             ***
                 import React from "react";
 
-                const Profile = ({name}) => {
+                const Profile = ({name, imgUrl, about}) => {
                     return (
                         <div className='profile'>
                         <p className='name'>{name}</p>
-                        <img className='profile-img' src='https://imgd.aeplcdn.com/370x208/n/cw/ec/130591/fronx-exterior-right-front-three-quarter-109.jpeg?isig=0&q=80' alt='' />
-                        <p className='about'>I am a developer</p>
+                        <img className='profile-img' src={imgUrl} alt='' />
+                        <p className='about'>{about}</p>
                         </div>
                     )
                 }
@@ -179,61 +211,6 @@ Step 5: Link Your Local Folder to GitHub Repo:
                 export default Profile;
             ***
 
-
-
-
-    code:
-    app.js
-    ***
-        import './App.css';
-        import React, { useState } from 'react';
-        import CustomButton from './components/CustomButton';
-
-        function App() {
-            const [buttonClicked, setButtonClicked] = useState(false);
-
-            const handleClick = () => {
-                setButtonClicked(true);
-                alert('Button clicked!');
-            };
-
-            return (
-                <div className="App">
-                    <h1>Welcome to My React App</h1>
-                    <CustomButton 
-                        text="Click Me" 
-                        onClick={handleClick} 
-                        className="primary-button" 
-                    />
-                    {buttonClicked && <p>You've clicked the button!</p>}
-                </div>
-            );
-        }
-
-        export default App;
-    ***
-    CustomButton.js
-    ***
-        import React from 'react';
-
-        const CustomButton = ({ text, onClick, disabled, className }) => {
-            return (
-                <button 
-                    className={`custom-button ${className}`} 
-                    onClick={onClick} 
-                    disabled={disabled}
-                >
-                    {text}
-                </button>
-            );
-        };
-
-        export default CustomButton;
-    ***
-4. Components - Introduction to functional components and their structures
-    a. Import components
-    b. Export components 
-5. Props - Passing data to components
 6. State - Managing state within components
 
 - Building a Landing Page:
