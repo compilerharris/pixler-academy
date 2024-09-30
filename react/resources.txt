@@ -15,3 +15,6 @@ https://create-react-app.dev/docs/getting-started
 
 Download Nodejs Website
 https://nodejs.org/en/download/prebuilt-installer
+
+Download and install Bulma in react
+https://blog.logrocket.com/how-to-use-bulma-css-with-react/
