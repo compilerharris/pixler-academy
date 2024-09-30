@@ -4,8 +4,8 @@ import Card from 'react-bootstrap/Card';
 
 const Profile = ({profile}) => {
     return (
-      <Card className="mb-2" style={{ width: '18rem' }}>
-        <Card.Img variant="top" src={profile.img} style={{ width: '18rem',height: '18rem' }} />
+      <Card className="col-md-4 m-2" style={{ width: '18rem' }}>
+        <Card.Img src={profile.img} />
         <Card.Body>
           <Card.Title>{profile.name}</Card.Title>
           <Card.Text>{profile.about}</Card.Text>

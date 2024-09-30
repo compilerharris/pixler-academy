@@ -104,42 +104,8 @@ Step 5: Link Your Local Folder to GitHub Repo:
             ├── logo.svg
             ├── serviceWorker.js
             └── setupTests.js
+
 3. JSX Syntax - Writing HTML-like syntax in JavaScript
-    - Practice project
-
-    code:
-    Profile.js
-        ***
-            import React from "react";
-
-            const Profile = () => {
-                return (
-                    <div className='profile'>
-                    <p className='name'>Haris</p>
-                    <img className='profile-img' src='https://imgd.aeplcdn.com/370x208/n/cw/ec/130591/fronx-exterior-right-front-three-quarter-109.jpeg?isig=0&q=80' alt='' />
-                    <p className='about'>I am a developer</p>
-                    </div>
-                )
-            }
-
-            export default Profile;
-        ***
-    App.js
-        ***
-            import './App.css';
-            import Profile from './components/Profile';
-
-            function App() {
-            return (
-                <div>
-                <h1>Profile</h1>
-                <Profile />
-                </div>
-            );
-            }
-
-            export default App;
-        ***
 
 4. Props - React Props are like function arguments in JavaScript and attributes in HTML.
 
@@ -154,88 +120,16 @@ Step 5: Link Your Local Folder to GitHub Repo:
 5. Components - Introduction to functional components and their structures
     a. Import components
     b. Export components 
-    
-    code:
-        App.js
-            ***
-                import './App.css';
-                import Profile from './components/Profile';
 
-                function App() {
-                const profiles = [
-                    {
-                    name:"Samit",
-                    img:"https://t3.ftcdn.net/jpg/02/16/60/42/360_F_216604243_4yvQhIudgknAWu04Ob7aSOu6BdIfhBNb.jpg",
-                    about:"I am a web designer",
-                    profileUrl:"https://github.com/samit46"
-                    },
-                    {
-                    name:"Huzaif",
-                    img:"https://www.motoroids.com/wp-content/uploads/2015/04/Fast-and-Furious-Toyota-Supra-10.jpg",
-                    about:"I am a student",
-                    profileUrl:"https://github.com/itachi644"
-                    },
-                    {
-                    name:"Rehan",
-                    img:"https://img.lovepik.com/photo/48007/1949.jpg_wh860.jpg",
-                    about:"I am a developer",
-                    profileUrl:"https://github.com/rehandossa"
-                    },
-                    {
-                    name:"Muizz",
-                    img:"https://img.lovepik.com/photo/48007/1949.jpg_wh860.jpg",
-                    about:"I am a Student",
-                    profileUrl:"https://github.com/skmuizz"
-                    }
-                ];
+6. Accessing data from json file.
 
-                return (
-                    <div className="container mt-5">
-                    <h1>Github Profiles</h1>
-                    <div className="row">
-                        {
-                        profiles.map((profile, key) => {
-                            return (
-                            <div className="col-md-4" key={key} >
-                                <Profile profile={profile} />
-                            </div>
-                            )
-                        })
-                        }
-                    </div>
-                    </div>
-                );
-                }
+7. fetch - calling file using fetch, converting into json
 
-                export default App;
-            ***
+8. Hooks - Creating and using Hooks.
 
-        Profile.js
-            ***
-                import React from "react";
-                import Button from 'react-bootstrap/Button';
-                import Card from 'react-bootstrap/Card';
+9. State - Managing state within components
 
-                const Profile = ({profile}) => {
-                    return (
-                    <Card className="mb-2" style={{ width: '18rem' }}>
-                        <Card.Img variant="top" src={profile.img} style={{ width: '18rem',height: '18rem' }} />
-                        <Card.Body>
-                        <Card.Title>{profile.name}</Card.Title>
-                        <Card.Text>{profile.about}</Card.Text>
-                        <Card.Link href={profile.profileUrl} target="_blank">
-                            <Button variant="primary">Visit {profile.name}'s Profile</Button>
-                        </Card.Link>
-                        </Card.Body>
-                    </Card>
-                    )
-                }
-
-                export default Profile;
-            ***
-
-6. State - Managing state within components
-7. Routes - Creating and using route.
+10. Routes - Creating and using route.
 
 - Building a Landing Page:
 
