@@ -1,0 +1,68 @@
+- Revision:
+
+6. Accessing data from json file.
+
+7. fetch - calling file using fetch, converting into json
+
+8. Hooks - Creating and using Hooks.
+    a. useEffect() - import, usage and 3 types
+
+    code:
+        App.js
+            ***
+                import './App.css';
+                import Profile from './components/Profile';
+                import React, { useState, useEffect } from 'react';
+
+                function App() {
+                    const [profiles, setProfiles] = useState([]);
+
+                    useEffect(() => {
+                        fetch('/data/profiles.json')
+                            .then(response => response.json())
+                            .then(data => setProfiles(data))
+                            .catch(error => console.error('Error fetching the profiles:', error));
+                    },[]);
+
+                    return (
+                        <div className="container mt-5">
+                        <h1>Github Profiles</h1>
+                        <div className="row">
+                            {
+                            profiles.map((profile, key) => {
+                                return (
+                                <Profile key={key} profile={profile} />
+                                )
+                            })
+                            }
+                        </div>
+                        </div>
+                    );
+                }
+
+                export default App;
+            ***
+
+        Profile.js
+            ***
+                import React from "react";
+                import Button from 'react-bootstrap/Button';
+                import Card from 'react-bootstrap/Card';
+
+                const Profile = ({profile}) => {
+                    return (
+                    <Card className="col-md-4 m-2" style={{ width: '18rem' }}>
+                        <Card.Img src={profile.img} />
+                        <Card.Body>
+                        <Card.Title>{profile.name}</Card.Title>
+                        <Card.Text>{profile.about}</Card.Text>
+                        <Card.Link href={profile.profileUrl} target="_blank">
+                            <Button variant="primary">Visit {profile.name}'s Profile</Button>
+                        </Card.Link>
+                        </Card.Body>
+                    </Card>
+                    )
+                }
+
+                export default Profile;
+            ***
