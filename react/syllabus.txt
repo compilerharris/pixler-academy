@@ -142,7 +142,7 @@ Step 5: Link Your Local Folder to GitHub Repo:
 - Activity:
 
 1. Basic Calculator
-2. Result Calculator
+2. Exam Result Calculator
 3. Clone (https://www.netflix.com/in/)
 3. Landing Page
 4. Micro Website
