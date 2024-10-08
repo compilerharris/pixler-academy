@@ -1,113 +1,30 @@
 import './App.css';
 import Profile from './components/Profile';
 import React, { useState, useEffect } from 'react';
+import Container from 'react-bootstrap/Container';
+import Nav from 'react-bootstrap/Nav';
+import Navbar from 'react-bootstrap/Navbar';
+import NavDropdown from 'react-bootstrap/NavDropdown';
+import { Routes, Route } from 'react-router-dom';
+import Calculator from './components/Calculator';
 
 function App() {
-
-  // Calculation start
-    const initalData = {
-      number1:"",
-      number2:"",
-      result:"",
-    };
-    const [data, setData] = useState(initalData);
-    const updateNumber1 = (e) => {
-      setData({ ...data, number1: parseInt(e.target.value)})
-    }
-    const updateNumber2 = (e) => {
-      setData({ ...data, number2: parseInt(e.target.value)})
-    }
-    const calculateResult = (action) => {
-      if(action == 'add'){
-        const result = data.number1 + data.number2;
-        setData({ ...data, result: result})
-        const history = data.number1+" + "+data.number2+" = "+result;
-        setHistory((prevHistory)=>[history,...prevHistory])
-      }else if(action == 'sub'){
-        if(data.number1 >= data.number2){
-          const result = data.number1 - data.number2;
-          setData({ ...data, result: result})
-          const history = data.number1+" - "+data.number2+" = "+result;
-          setHistory((prevHistory)=>[history,...prevHistory])
-        }else{
-          alert("First value " + data.number1 + " must be greater than second value " + data.number2 + ".")
-        }
-      }else if(action == 'mul'){
-        const result = data.number1 * data.number2;
-        setData({ ...data, result: result})
-        const history = data.number1+" * "+data.number2+" = "+result;
-        setHistory((prevHistory)=>[history,...prevHistory])
-      }else if(action == 'div'){
-        const result = data.number1 / data.number2;
-        setData({ ...data, result: result})
-        const history = data.number1+" / "+data.number2+" = "+result;
-        setHistory((prevHistory)=>[history,...prevHistory])
-      }else{
-        setData(initalData)
-      }
-    }
-  // calculation end
-
-  // history start
-    const [histories, setHistory] = useState([]);
-    const clearHistory = () => {
-      setHistory([])
-    }
-  // history end
-
   return (
     <div className="container">
-      <div className="row">
-        <div className="col-md-8">
-          {/* Result */}
-          <div className='card'>
-            <div className="card-body">
-              <h1>Result: {data.result}</h1>
-            </div>
-          </div>
-          {/* Numbers */}
-          <div className='card'>
-            <div className="card-body">
-              <label className='m-2' htmlFor="number1">Number 1: </label>
-              <input className='m-2' type="number" id='number1' placeholder='Enter number' onChange={updateNumber1} value={data.number1}/>
-              <label className='m-2' htmlFor="number2">Number 2: </label>
-              <input className='m-2' type="number" id='number2' placeholder='Enter number' onChange={updateNumber2} value={data.number2} />
-            </div>
-          </div>
-          {/* Operators */}
-          <div className='card'>
-            <div className="card-body">
-              <input className='m-2 p-2 fs-2' type="button" value="+" onClick={()=>calculateResult('add')} />
-              <input className='m-2 p-2 fs-2' type="button" value="-" onClick={()=>calculateResult('sub')} />
-              <input className='m-2 p-2 fs-2' type="button" value="*" onClick={()=>calculateResult('mul')} />
-              <input className='m-2 p-2 fs-2' type="button" value="/" onClick={()=>calculateResult('div')} />
-              <input className='m-2 p-2 fs-2' type="button" value="C" onClick={()=>calculateResult('clear')} />
-            </div>
-          </div>
-        </div>
-        <div className="col-md-4">
-          <div className="card">
-            <div className="card-body">
-              <h3>History</h3>
-              {
-                histories.length == 0?
-                  <p>No history found.</p>
-                :
-                  <>
-                    <ol>
-                      {
-                        histories.map((history,key)=>{
-                          return <li key={key}>{history}</li>
-                        })
-                      }
-                    </ol>
-                    <input className='m-2 fs-6' type="button" value="Clear" onClick={clearHistory} />
-                  </>
-              }
-            </div>
-          </div>
-        </div>
-      </div>
+      <Navbar expand="lg" className="bg-body-tertiary">
+      <Container>
+        <Navbar.Brand href="/">Practice</Navbar.Brand>
+          <Navbar.Toggle aria-controls="basic-navbar-nav" />
+          <Navbar.Collapse id="basic-navbar-nav">
+            <Nav className="me-auto">
+              <Nav.Link href="/calculator">Calculator</Nav.Link>
+            </Nav>
+          </Navbar.Collapse>
+        </Container>
+      </Navbar>
+      <Routes>
+        <Route path='/calculator' element={<Calculator/>}/>
+      </Routes>
     </div>
   )
 
