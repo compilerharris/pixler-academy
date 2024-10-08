@@ -10,7 +10,6 @@
         App.js
             ***
                 import './App.css';
-                import Profile from './components/Profile';
                 import React, { useState, useEffect } from 'react';
 
                 function App() {
