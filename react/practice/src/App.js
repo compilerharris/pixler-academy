@@ -21,18 +21,27 @@ function App() {
       if(action == 'add'){
         const result = data.number1 + data.number2;
         setData({ ...data, result: result})
-        const history = data.number1+"+"+data.number2+"="+result;
-        setHistory([history])
+        const history = data.number1+" + "+data.number2+" = "+result;
+        setHistory((prevHistory)=>[history,...prevHistory])
       }else if(action == 'sub'){
         if(data.number1 >= data.number2){
-          setData({ ...data, result: data.number1 - data.number2})
+          const result = data.number1 - data.number2;
+          setData({ ...data, result: result})
+          const history = data.number1+" - "+data.number2+" = "+result;
+          setHistory((prevHistory)=>[history,...prevHistory])
         }else{
           alert("First value " + data.number1 + " must be greater than second value " + data.number2 + ".")
         }
       }else if(action == 'mul'){
-        setData({ ...data, result: data.number1 * data.number2})
+        const result = data.number1 * data.number2;
+        setData({ ...data, result: result})
+        const history = data.number1+" * "+data.number2+" = "+result;
+        setHistory((prevHistory)=>[history,...prevHistory])
       }else if(action == 'div'){
-        setData({ ...data, result: data.number1 / data.number2})
+        const result = data.number1 / data.number2;
+        setData({ ...data, result: result})
+        const history = data.number1+" / "+data.number2+" = "+result;
+        setHistory((prevHistory)=>[history,...prevHistory])
       }else{
         setData(initalData)
       }
@@ -41,6 +50,9 @@ function App() {
 
   // history start
     const [histories, setHistory] = useState([]);
+    const clearHistory = () => {
+      setHistory([])
+    }
   // history end
 
   return (
@@ -77,13 +89,21 @@ function App() {
           <div className="card">
             <div className="card-body">
               <h3>History</h3>
-              <ol>
-                {
-                  histories.map((history,key)=>{
-                    return <li key={key}>{history}</li>
-                  })
-                }
-              </ol>
+              {
+                histories.length == 0?
+                  <p>No history found.</p>
+                :
+                  <>
+                    <ol>
+                      {
+                        histories.map((history,key)=>{
+                          return <li key={key}>{history}</li>
+                        })
+                      }
+                    </ol>
+                    <input className='m-2 fs-6' type="button" value="Clear" onClick={clearHistory} />
+                  </>
+              }
             </div>
           </div>
         </div>
