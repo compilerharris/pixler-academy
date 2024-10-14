@@ -12,23 +12,25 @@ const Calculator = () => {
     const updateNumber1 = (e) => {
       if(e.target.value == "" ){
         setErrorMsg("Please enter number 1 and 2.");
+        setData({ ...data, number1: ""})
       }else{
         setErrorMsg("");
+        setData({ ...data, number1: parseInt(e.target.value)})
       }
-      setData({ ...data, number1: parseInt(e.target.value)})
     }
     const updateNumber2 = (e) => {
       if(e.target.value == "" ){
         setErrorMsg("Please enter number 1 and 2.");
+        setData({ ...data, number2: ""})
       }else{
         setErrorMsg("");
+        setData({ ...data, number2: parseInt(e.target.value)})
       }
-      setData({ ...data, number2: parseInt(e.target.value)})
     }
     const calculateResult = (action) => {
       if(action == 'add'){
         if(data.number1 == "" || data.number2 == ""){
-          setErrorMsg("Please enter number 1 and 2.");
+          setErrorMsg("Please enter value of number 1 and 2.");
           return 0;
         }
         const result = data.number1 + data.number2;
@@ -36,6 +38,10 @@ const Calculator = () => {
         const newHistory = data.number1+" + "+data.number2+" = "+result;
         setHistory((prevHistory)=>[newHistory,...prevHistory])
       }else if(action == 'sub'){
+        if(data.number1 == "" || data.number2 == ""){
+          setErrorMsg("Please enter value of number 1 and 2.");
+          return 0;
+        }
         if(data.number1 >= data.number2){
           const result = data.number1 - data.number2;
           setData({ ...data, result: result})
@@ -45,11 +51,19 @@ const Calculator = () => {
           alert("First value " + data.number1 + " must be greater than second value " + data.number2 + ".")
         }
       }else if(action == 'mul'){
+        if(data.number1 == "" || data.number2 == ""){
+          setErrorMsg("Please enter value of number 1 and 2.");
+          return 0;
+        }
         const result = data.number1 * data.number2;
         setData({ ...data, result: result})
         const history = data.number1+" * "+data.number2+" = "+result;
         setHistory((prevHistory)=>[history,...prevHistory])
       }else if(action == 'div'){
+        if(data.number1 == "" || data.number2 == ""){
+          setErrorMsg("Please enter value of number 1 and 2.");
+          return 0;
+        }
         const result = data.number1 / data.number2;
         setData({ ...data, result: result})
         const history = data.number1+" / "+data.number2+" = "+result;
