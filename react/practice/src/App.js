@@ -5,19 +5,19 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Link } from 'react-router-dom';
 import Calculator from './components/Calculator';
 
 function App() {
   return (
     <div className="container">
       <Navbar expand="lg" className="bg-body-tertiary">
-      <Container>
-        <Navbar.Brand href="/">Practice</Navbar.Brand>
+        <Container>
+          <Navbar.Brand><Link style={{textDecoration:"none",color:"black"}} to="/">Practice App</Link></Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
-              <Nav.Link href="/calculator">Calculator</Nav.Link>
+              <Link style={{textDecoration:"none",color:"gray"}} to="/calculator">Calculator</Link>
             </Nav>
           </Navbar.Collapse>
         </Container>

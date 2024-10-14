@@ -10,13 +10,27 @@ const Calculator = () => {
     };
     const [data, setData] = useState(initalData);
     const updateNumber1 = (e) => {
+      if(e.target.value == "" ){
+        setErrorMsg("Please enter number 1 and 2.");
+      }else{
+        setErrorMsg("");
+      }
       setData({ ...data, number1: parseInt(e.target.value)})
     }
     const updateNumber2 = (e) => {
+      if(e.target.value == "" ){
+        setErrorMsg("Please enter number 1 and 2.");
+      }else{
+        setErrorMsg("");
+      }
       setData({ ...data, number2: parseInt(e.target.value)})
     }
     const calculateResult = (action) => {
       if(action == 'add'){
+        if(data.number1 == "" || data.number2 == ""){
+          setErrorMsg("Please enter number 1 and 2.");
+          return 0;
+        }
         const result = data.number1 + data.number2;
         setData({ ...data, result: result})
         const newHistory = data.number1+" + "+data.number2+" = "+result;
@@ -48,6 +62,7 @@ const Calculator = () => {
 
   // history start
     const [histories, setHistory] = useState([]);
+    const [errorMsg, setErrorMsg] = useState("");
     const clearHistory = () => {
       setHistory([])
     }
@@ -65,8 +80,11 @@ const Calculator = () => {
         {/* Numbers */}
         <div className='card'>
           <div className="card-body">
+            {
+              errorMsg == "" ? <></> : <p style={{color:"red"}}>{errorMsg}</p>
+            }
             <label className='m-2' htmlFor="number1">Number 1: </label>
-            <input className='m-2' type="number" id='number1' placeholder='Enter number' onChange={updateNumber1} value={data.number1}/>
+            <input className='m-2' type="number" id='number1' placeholder='Enter number' onChange={updateNumber1} value={data.number1} min={1} required/>
             <label className='m-2' htmlFor="number2">Number 2: </label>
             <input className='m-2' type="number" id='number2' placeholder='Enter number' onChange={updateNumber2} value={data.number2} />
           </div>

@@ -131,6 +131,8 @@ Step 5: Link Your Local Folder to GitHub Repo:
 
 10. Routes - Creating and using route.
 
+11. Form Validation - Validating form fields.
+
 - Building a Landing Page:
 
 1. Styling Components - Inline styles and CSS files
