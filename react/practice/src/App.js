@@ -4,27 +4,102 @@ import React, { useState, useEffect } from 'react';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import NavDropdown from 'react-bootstrap/NavDropdown';
 import { Routes, Route, Link } from 'react-router-dom';
 import Calculator from './components/Calculator';
+import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
 
 function App() {
+  const [isLogin, setIsLogin] = useState(false);
+  const [showRegister, setShowRegister] = useState(false);
   return (
     <div className="container">
-      <Navbar expand="lg" className="bg-body-tertiary">
-        <Container>
-          <Navbar.Brand><Link style={{textDecoration:"none",color:"black"}} to="/">Practice App</Link></Navbar.Brand>
-          <Navbar.Toggle aria-controls="basic-navbar-nav" />
-          <Navbar.Collapse id="basic-navbar-nav">
-            <Nav className="me-auto">
-              <Link style={{textDecoration:"none",color:"gray"}} to="/calculator">Calculator</Link>
-            </Nav>
-          </Navbar.Collapse>
-        </Container>
-      </Navbar>
-      <Routes>
-        <Route path='/calculator' element={<Calculator/>}/>
-      </Routes>
+      {
+        isLogin ? 
+        <>
+          <Navbar expand="lg" className="bg-body-tertiary">
+            <Container>
+              <Navbar.Brand><Link style={{ textDecoration: "none", color: "black" }} to="/">Practice App</Link></Navbar.Brand>
+              <Navbar.Toggle aria-controls="basic-navbar-nav" />
+              <Navbar.Collapse id="basic-navbar-nav">
+                <Nav className="me-auto">
+                  <Link style={{ textDecoration: "none", color: "gray" }} to="/calculator">Calculator</Link>
+                </Nav>
+              </Navbar.Collapse>
+            </Container>
+          </Navbar>
+          <Routes>
+            <Route path='/calculator' element={<Calculator />} />
+          </Routes>
+        </> 
+        : 
+        <>
+          {
+            showRegister ? 
+              <div className="row register">
+                <div className="col-md-4">
+                  <div className="card">
+                    <div className="card-header">Register</div>
+                    <div className="card-body">
+                      <Form>
+                        <Form.Group className="mb-3" controlId="formBasicEmail">
+                          <Form.Label>Email</Form.Label>
+                          <Form.Control type="email" placeholder="Enter email" />
+                          {/* <Form.Text className="text-muted">
+                            We'll never share your email with anyone else.
+                          </Form.Text> */}
+                        </Form.Group>
+    
+                        <Form.Group className="mb-3" controlId="formBasicPassword">
+                          <Form.Label>Password</Form.Label>
+                          <Form.Control type="password" placeholder="Password" />
+                        </Form.Group>
+                        {/* <Form.Group className="mb-3" controlId="formBasicCheckbox">
+                          <Form.Check type="checkbox" label="Check me out" />
+                        </Form.Group> */}
+                        <Button variant="primary" type="submit">
+                          Register
+                        </Button>
+                      </Form>
+                      <Link>Click here to register.</Link>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            :
+              <div className="row login">
+                <div className="col-md-4">
+                  <div className="card">
+                    <div className="card-header">Login</div>
+                    <div className="card-body">
+                      <Form>
+                        <Form.Group className="mb-3" controlId="formBasicEmail">
+                          <Form.Label>Email</Form.Label>
+                          <Form.Control type="email" placeholder="Enter email" />
+                          {/* <Form.Text className="text-muted">
+                            We'll never share your email with anyone else.
+                          </Form.Text> */}
+                        </Form.Group>
+    
+                        <Form.Group className="mb-3" controlId="formBasicPassword">
+                          <Form.Label>Password</Form.Label>
+                          <Form.Control type="password" placeholder="Password" />
+                        </Form.Group>
+                        {/* <Form.Group className="mb-3" controlId="formBasicCheckbox">
+                          <Form.Check type="checkbox" label="Check me out" />
+                        </Form.Group> */}
+                        <Button variant="primary" type="submit">
+                          Login
+                        </Button>
+                      </Form>
+                      <Link>Click here to register.</Link>
+                    </div>
+                  </div>
+                </div>
+              </div>
+          }
+        </>
+      }
     </div>
   )
 

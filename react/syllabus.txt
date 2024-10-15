@@ -133,19 +133,16 @@ Step 5: Link Your Local Folder to GitHub Repo:
 
 11. Form Validation - Validating form fields.
 
+12. Authentication - Creating login and register form and perform authentication.
+
 - Building a Landing Page:
 
 1. Styling Components - Inline styles and CSS files
 2. Handling Events - Handling user inputs (clicks, form submissions)
 3. Basic Routing with React Router - Introduction to routing and creating a single-page landing page
-4. Using Images and Media in React - Embedding and optimizing media
-5. Responsive Design - Using CSS frameworks (Bootstrap/Tailwind) for responsiveness
 
 - Activity:
 
 1. Basic Calculator
-2. Exam Result Calculator
-3. Clone (https://www.netflix.com/in/)
-3. Landing Page
-4. Micro Website
-5. Website
+2. Exam Result/PCM eligibility Calculator
+3. Micro Website
