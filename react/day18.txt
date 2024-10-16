@@ -1,0 +1,344 @@
+- Revision:
+
+- More Practice
+
+12. Authentication - Creating login and register form and perform authentication.
+    - Created login functionality
+    - Write algorithm for user login
+    - Write algorithm for user logout
+
+    code:
+        App.js
+            ***
+                import './App.css';
+                import React, { useState, useEffect } from 'react';
+                import Container from 'react-bootstrap/Container';
+                import Nav from 'react-bootstrap/Nav';
+                import Navbar from 'react-bootstrap/Navbar';
+                import NavDropdown from 'react-bootstrap/NavDropdown';
+                import { Routes, Route, Link } from 'react-router-dom';
+                import Calculator from './components/Calculator';
+
+                function App() {
+                    const [isLogin, setIsLogin] = useState(false);
+                    const [showRegister, setShowRegister] = useState(false);
+
+                    const initialRegisterData = {
+                        name:"",
+                        username:"",
+                        password:""
+                    };
+                    const [registerData, setRegisterData] = useState(initialRegisterData);
+
+                    /** Algorithm for user registeration
+                    * 1. validate data
+                    * 2. save data into localstorage
+                    * 3. display success message
+                    * 4. clear register form
+                    * 5. redirect to home page
+                    */
+                    
+                    const registerUser = (e) => {
+                        e.preventDefault();
+                        // Validation => homework
+                        let lsRegister = JSON.parse(localStorage.getItem('users'));
+                        if(lsRegister == null){
+                            lsRegister = [];
+                        }
+                        lsRegister.push(registerData);
+                        localStorage.setItem('users', JSON.stringify(lsRegister));
+                        localStorage.setItem('user-session',JSON.stringify(registerData));
+                        setUsername(registerData.username)
+                        alert("You have successfully registered as " + registerData.username);
+                        setRegisterData(initialRegisterData);
+                        setIsLogin(true);
+                    }
+
+                    const initialLoginData = {
+                        username:"",
+                        password:""
+                    };
+                    const [loginData, setLoginData] = useState(initialLoginData);
+
+                    /** Algorithm for user login
+                    * 1. validate data
+                    * 2. check username and password
+                    * 3. display success or error message
+                    * 4. clear login form
+                    * 5. redirect to home page
+                    */
+
+                    const loginUser = (e) => {
+                        e.preventDefault();
+                        // Validation => homework
+
+                        const users = JSON.parse(localStorage.getItem('users'));
+                        if( users == null || users.length == 0){
+                        alert("No user found as " + loginData.username + ". Click here to register.");
+                        }
+                        const user = users.filter((u) => {
+                        return (u.username == loginData.username && u.password == loginData.password)
+                        });
+                        console.log(user)
+
+                        if(user == null || user.length == 0){
+                        alert("Wrong username and password");
+                        return 0;
+                        }
+
+                        alert("You have successfully logged in as " + loginData.username);
+                        setLoginData(initialLoginData);
+                        localStorage.setItem('user-session',JSON.stringify(user[0]));
+                        setUsername(user[0].username)
+                        setIsLogin(true);
+                    }
+
+                    /** Algorithm for user logout
+                    * 1. remove user-session
+                    * 2. display success message
+                    * 3. redirect login form
+                    */
+                    const logoutUser = () => {
+                        localStorage.removeItem('user-session');
+                        setIsLogin(false);
+                        setShowRegister(false);
+                        alert("You are successfully logged out!");
+                    }
+
+                    return (
+                        <div className="container">
+                        {
+                            isLogin ? 
+                            <>
+                            <Navbar expand="lg" className="bg-body-tertiary">
+                                <Container>
+                                <Navbar.Brand><Link style={{ textDecoration: "none", color: "black" }} to="/">Practice App</Link></Navbar.Brand>
+                                <Navbar.Toggle aria-controls="basic-navbar-nav" />
+                                <Navbar.Collapse id="basic-navbar-nav">
+                                    <Nav className="me-auto">
+                                    <Link style={{ textDecoration: "none", color: "gray" }} to="/calculator">Calculator</Link>
+                                    </Nav>
+                                </Navbar.Collapse>
+                                </Container>
+                            </Navbar>
+                            <Routes>
+                                <Route path='/calculator' element={<Calculator />} />
+                            </Routes>
+                            </> 
+                            : 
+                            <>
+                            {
+                                showRegister ? 
+                                    <div className="row register">
+                                        <div className="col-md-4" style={{margin:"0 auto"}}>
+                                            <div className="card">
+                                                <div className="card-header">Register</div>
+                                                <div className="card-body">
+                                                    <Form onSubmit={registerUser}>
+                                                        {/* name */}
+                                                        <Form.Group className="mb-3" controlId="formBasicEmail">
+                                                        <Form.Label>Name</Form.Label>
+                                                        <Form.Control type="text" placeholder="Enter Name" value={registerData.name} onChange={(e)=>setRegisterData({...registerData,name: e.target.value})}/>
+                                                        {/* <Form.Text className="text-muted">
+                                                            We'll never share your email with anyone else.
+                                                        </Form.Text> */}
+                                                        </Form.Group>
+
+                                                        {/* username */}
+                                                        <Form.Group className="mb-3" controlId="formBasicEmail">
+                                                        <Form.Label>Username</Form.Label>
+                                                        <Form.Control type="text" placeholder="Enter Username" value={registerData.username} onChange={(e)=>setRegisterData({...registerData,username: e.target.value})}/>
+                                                        {/* <Form.Text className="text-muted">
+                                                            We'll never share your email with anyone else.
+                                                        </Form.Text> */}
+                                                        </Form.Group>
+                                    
+                                                        {/* password */}
+                                                        <Form.Group className="mb-3" controlId="formBasicPassword">
+                                                        <Form.Label>Password</Form.Label>
+                                                        <Form.Control type="password" placeholder="Password" value={registerData.password} onChange={(e)=>setRegisterData({...registerData,password: e.target.value})}/>
+                                                        </Form.Group>
+                                                        {/* <Form.Group className="mb-3" controlId="formBasicCheckbox">
+                                                        <Form.Check type="checkbox" label="Check me out" />
+                                                        </Form.Group> */}
+                                                        <Button variant="primary" type="submit">
+                                                        Register
+                                                        </Button>
+                                                    </Form>
+                                                    <Link onClick={()=>setShowRegister(false)}>Already have an account click here to login.</Link>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                :
+                                    <div className="row login">
+                                        <div className="col-md-4" style={{margin:"0 auto"}}>
+                                        <div className="card">
+                                            <div className="card-header">Login</div>
+                                            <div className="card-body">
+                                            <Form onSubmit={loginUser}>
+                                                <Form.Group className="mb-3" controlId="formBasicEmail">
+                                                <Form.Label>Username</Form.Label>
+                                                <Form.Control type="text" placeholder="Enter username" value={loginData.username} onChange={(e)=>setLoginData({...loginData,username: e.target.value})} />
+                                                {/* <Form.Text className="text-muted">
+                                                    We'll never share your email with anyone else.
+                                                </Form.Text> */}
+                                                </Form.Group>
+                            
+                                                <Form.Group className="mb-3" controlId="formBasicPassword">
+                                                <Form.Label>Password</Form.Label>
+                                                <Form.Control type="password" placeholder="Password" value={loginData.password} onChange={(e)=>setLoginData({...loginData,password: e.target.value})} />
+                                                </Form.Group>
+                                                {/* <Form.Group className="mb-3" controlId="formBasicCheckbox">
+                                                <Form.Check type="checkbox" label="Check me out" />
+                                                </Form.Group> */}
+                                                <Button variant="primary" type="submit">
+                                                Login
+                                                </Button>
+                                            </Form>
+                                            <Link onClick={()=>setShowRegister(true)}>Click here to register.</Link>
+                                            </div>
+                                        </div>
+                                        </div>
+                                    </div>
+                            }
+                            </>
+                        }
+                        </div>
+                    )
+                }
+
+                export default App;
+            ***
+        Calculator.js
+            ***
+                import React, { useState } from 'react';
+
+                const Calculator = () => {
+
+                    // Calculation start
+                        const initalData = {
+                        number1:"",
+                        number2:"",
+                        result:"",
+                        };
+                        const [data, setData] = useState(initalData);
+                        const updateNumber1 = (e) => {
+                        if(e.target.value == "" ){
+                            setErrorMsg("Please enter number 1 and 2.");
+                        }else{
+                            setErrorMsg("");
+                        }
+                        setData({ ...data, number1: parseInt(e.target.value)})
+                        }
+                        const updateNumber2 = (e) => {
+                        if(e.target.value == "" ){
+                            setErrorMsg("Please enter number 1 and 2.");
+                        }else{
+                            setErrorMsg("");
+                        }
+                        setData({ ...data, number2: parseInt(e.target.value)})
+                        }
+                        const calculateResult = (action) => {
+                        if(action == 'add'){
+                            if(data.number1 == "" || data.number2 == ""){
+                            setErrorMsg("Please enter number 1 and 2.");
+                            return 0;
+                            }
+                            const result = data.number1 + data.number2;
+                            setData({ ...data, result: result})
+                            const newHistory = data.number1+" + "+data.number2+" = "+result;
+                            setHistory((prevHistory)=>[newHistory,...prevHistory])
+                        }else if(action == 'sub'){
+                            if(data.number1 >= data.number2){
+                            const result = data.number1 - data.number2;
+                            setData({ ...data, result: result})
+                            const history = data.number1+" - "+data.number2+" = "+result;
+                            setHistory((prevHistory)=>[history,...prevHistory])
+                            }else{
+                            alert("First value " + data.number1 + " must be greater than second value " + data.number2 + ".")
+                            }
+                        }else if(action == 'mul'){
+                            const result = data.number1 * data.number2;
+                            setData({ ...data, result: result})
+                            const history = data.number1+" * "+data.number2+" = "+result;
+                            setHistory((prevHistory)=>[history,...prevHistory])
+                        }else if(action == 'div'){
+                            const result = data.number1 / data.number2;
+                            setData({ ...data, result: result})
+                            const history = data.number1+" / "+data.number2+" = "+result;
+                            setHistory((prevHistory)=>[history,...prevHistory])
+                        }else{
+                            setData(initalData)
+                        }
+                        }
+                    // calculation end
+
+                    // history start
+                        const [histories, setHistory] = useState([]);
+                        const [errorMsg, setErrorMsg] = useState("");
+                        const clearHistory = () => {
+                        setHistory([])
+                        }
+                    // history end
+
+                    return (
+                        <div className="row">
+                        <div className="col-md-8">
+                            {/* Result */}
+                            <div className='card'>
+                            <div className="card-body">
+                                <h1>Result: {data.result}</h1>
+                            </div>
+                            </div>
+                            {/* Numbers */}
+                            <div className='card'>
+                            <div className="card-body">
+                                {
+                                errorMsg == "" ? <></> : <p style={{color:"red"}}>{errorMsg}</p>
+                                }
+                                <label className='m-2' htmlFor="number1">Number 1: </label>
+                                <input className='m-2' type="number" id='number1' placeholder='Enter number' onChange={updateNumber1} value={data.number1} min={1} required/>
+                                <label className='m-2' htmlFor="number2">Number 2: </label>
+                                <input className='m-2' type="number" id='number2' placeholder='Enter number' onChange={updateNumber2} value={data.number2} />
+                            </div>
+                            </div>
+                            {/* Operators */}
+                            <div className='card'>
+                            <div className="card-body">
+                                <input className='m-2 p-2 fs-2' type="button" value="+" onClick={()=>calculateResult('add')} />
+                                <input className='m-2 p-2 fs-2' type="button" value="-" onClick={()=>calculateResult('sub')} />
+                                <input className='m-2 p-2 fs-2' type="button" value="*" onClick={()=>calculateResult('mul')} />
+                                <input className='m-2 p-2 fs-2' type="button" value="/" onClick={()=>calculateResult('div')} />
+                                <input className='m-2 p-2 fs-2' type="button" value="C" onClick={()=>calculateResult('clear')} />
+                            </div>
+                            </div>
+                        </div>
+                        <div className="col-md-4">
+                            <div className="card">
+                            <div className="card-body">
+                                <h3>History</h3>
+                                {
+                                histories.length == 0?
+                                    <p>No history found.</p>
+                                :
+                                    <>
+                                    <ol>
+                                        {
+                                        histories.map((history,key)=>{
+                                            return <li key={key}>{history}</li>
+                                        })
+                                        }
+                                    </ol>
+                                    <input className='m-2 fs-6' type="button" value="Clear" onClick={clearHistory} />
+                                    </>
+                                }
+                            </div>
+                            </div>
+                        </div>
+                        </div>
+                    )
+                }
+
+                export default Calculator;
+            ***

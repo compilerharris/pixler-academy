@@ -135,6 +135,8 @@ Step 5: Link Your Local Folder to GitHub Repo:
 
 12. Authentication - Creating login and register form and perform authentication.
 
+13. Algorithm - Writing algorithm to understand code easily.
+
 - Building a Landing Page:
 
 1. Styling Components - Inline styles and CSS files

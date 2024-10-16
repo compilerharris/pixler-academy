@@ -3,8 +3,9 @@
 - More Practice
 
 12. Authentication - Creating login and register form and perform authentication.
-    - Created login and register UI
-    
+    - Created register functionality
+    - Write algorithm for user registeration
+
     code:
         App.js
             ***
@@ -20,6 +21,37 @@
                 function App() {
                     const [isLogin, setIsLogin] = useState(false);
                     const [showRegister, setShowRegister] = useState(false);
+
+                    const initialRegisterData = {
+                        name:"",
+                        username:"",
+                        password:""
+                    };
+                    const [registerData, setRegisterData] = useState(initialRegisterData);
+
+                    /** Algorithm for user registeration
+                    * 1. validate data
+                    * 2. save data into localstorage
+                    * 3. display success message
+                    * 4. clear register form
+                    * 5. redirect to home page
+                    */
+                    
+                    const registerUser = (e) => {
+                        e.preventDefault();
+                        // Validation => homework
+                        let lsRegister = JSON.parse(localStorage.getItem('users'));
+                        if(lsRegister == null){
+                            lsRegister = [];
+                        }
+                        lsRegister.push(registerData);
+                        localStorage.setItem('users', JSON.stringify(lsRegister));
+                        localStorage.setItem('user-session',JSON.stringify(registerData));
+                        setUsername(registerData.username)
+                        alert("You have successfully registered as " + registerData.username);
+                        setRegisterData(initialRegisterData);
+                        setIsLogin(true);
+                    }
                     return (
                         <div className="container">
                         {
@@ -44,67 +76,78 @@
                             <>
                             {
                                 showRegister ? 
-                                <div className="row register">
-                                    <div className="col-md-4">
-                                    <div className="card">
-                                        <div className="card-header">Register</div>
-                                        <div className="card-body">
-                                        <Form>
-                                            <Form.Group className="mb-3" controlId="formBasicEmail">
-                                            <Form.Label>Email</Form.Label>
-                                            <Form.Control type="email" placeholder="Enter email" />
-                                            {/* <Form.Text className="text-muted">
-                                                We'll never share your email with anyone else.
-                                            </Form.Text> */}
-                                            </Form.Group>
-                        
-                                            <Form.Group className="mb-3" controlId="formBasicPassword">
-                                            <Form.Label>Password</Form.Label>
-                                            <Form.Control type="password" placeholder="Password" />
-                                            </Form.Group>
-                                            {/* <Form.Group className="mb-3" controlId="formBasicCheckbox">
-                                            <Form.Check type="checkbox" label="Check me out" />
-                                            </Form.Group> */}
-                                            <Button variant="primary" type="submit">
-                                            Register
-                                            </Button>
-                                        </Form>
-                                        <Link>Click here to register.</Link>
+                                    <div className="row register">
+                                        <div className="col-md-4" style={{margin:"0 auto"}}>
+                                            <div className="card">
+                                                <div className="card-header">Register</div>
+                                                <div className="card-body">
+                                                    <Form onSubmit={registerUser}>
+                                                        {/* name */}
+                                                        <Form.Group className="mb-3" controlId="formBasicEmail">
+                                                        <Form.Label>Name</Form.Label>
+                                                        <Form.Control type="text" placeholder="Enter Name" value={registerData.name} onChange={(e)=>setRegisterData({...registerData,name: e.target.value})}/>
+                                                        {/* <Form.Text className="text-muted">
+                                                            We'll never share your email with anyone else.
+                                                        </Form.Text> */}
+                                                        </Form.Group>
+
+                                                        {/* username */}
+                                                        <Form.Group className="mb-3" controlId="formBasicEmail">
+                                                        <Form.Label>Username</Form.Label>
+                                                        <Form.Control type="text" placeholder="Enter Username" value={registerData.username} onChange={(e)=>setRegisterData({...registerData,username: e.target.value})}/>
+                                                        {/* <Form.Text className="text-muted">
+                                                            We'll never share your email with anyone else.
+                                                        </Form.Text> */}
+                                                        </Form.Group>
+                                    
+                                                        {/* password */}
+                                                        <Form.Group className="mb-3" controlId="formBasicPassword">
+                                                        <Form.Label>Password</Form.Label>
+                                                        <Form.Control type="password" placeholder="Password" value={registerData.password} onChange={(e)=>setRegisterData({...registerData,password: e.target.value})}/>
+                                                        </Form.Group>
+                                                        {/* <Form.Group className="mb-3" controlId="formBasicCheckbox">
+                                                        <Form.Check type="checkbox" label="Check me out" />
+                                                        </Form.Group> */}
+                                                        <Button variant="primary" type="submit">
+                                                        Register
+                                                        </Button>
+                                                    </Form>
+                                                    <Link onClick={()=>setShowRegister(false)}>Already have an account click here to login.</Link>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                    </div>
-                                </div>
                                 :
-                                <div className="row login">
-                                    <div className="col-md-4">
-                                    <div className="card">
-                                        <div className="card-header">Login</div>
-                                        <div className="card-body">
-                                        <Form>
-                                            <Form.Group className="mb-3" controlId="formBasicEmail">
-                                            <Form.Label>Email</Form.Label>
-                                            <Form.Control type="email" placeholder="Enter email" />
-                                            {/* <Form.Text className="text-muted">
-                                                We'll never share your email with anyone else.
-                                            </Form.Text> */}
-                                            </Form.Group>
-                        
-                                            <Form.Group className="mb-3" controlId="formBasicPassword">
-                                            <Form.Label>Password</Form.Label>
-                                            <Form.Control type="password" placeholder="Password" />
-                                            </Form.Group>
-                                            {/* <Form.Group className="mb-3" controlId="formBasicCheckbox">
-                                            <Form.Check type="checkbox" label="Check me out" />
-                                            </Form.Group> */}
-                                            <Button variant="primary" type="submit">
-                                            Login
-                                            </Button>
-                                        </Form>
-                                        <Link>Click here to register.</Link>
+                                    <div className="row login">
+                                        <div className="col-md-4">
+                                        <div className="card">
+                                            <div className="card-header">Login</div>
+                                            <div className="card-body">
+                                            <Form>
+                                                <Form.Group className="mb-3" controlId="formBasicEmail">
+                                                <Form.Label>Email</Form.Label>
+                                                <Form.Control type="email" placeholder="Enter email" />
+                                                {/* <Form.Text className="text-muted">
+                                                    We'll never share your email with anyone else.
+                                                </Form.Text> */}
+                                                </Form.Group>
+                            
+                                                <Form.Group className="mb-3" controlId="formBasicPassword">
+                                                <Form.Label>Password</Form.Label>
+                                                <Form.Control type="password" placeholder="Password" />
+                                                </Form.Group>
+                                                {/* <Form.Group className="mb-3" controlId="formBasicCheckbox">
+                                                <Form.Check type="checkbox" label="Check me out" />
+                                                </Form.Group> */}
+                                                <Button variant="primary" type="submit">
+                                                Login
+                                                </Button>
+                                            </Form>
+                                            <Link>Click here to register.</Link>
+                                            </div>
+                                        </div>
                                         </div>
                                     </div>
-                                    </div>
-                                </div>
                             }
                             </>
                         }

@@ -8,14 +8,102 @@ import { Routes, Route, Link } from 'react-router-dom';
 import Calculator from './components/Calculator';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
+import Home from './components/Home';
 
 function App() {
-  const [isLogin, setIsLogin] = useState(false);
-  const [showRegister, setShowRegister] = useState(false);
+
+  const userSession = JSON.parse(localStorage.getItem('user-session'));
+  const [username, setUsername] = useState(userSession == null ? "" : userSession.username);
+  const [isLogin, setIsLogin] = useState(userSession == null ? false : true);
+  const [showRegister, setShowRegister] = useState(true);
+
+  const initialRegisterData = {
+    name:"",
+    username:"",
+    password:""
+  };
+  const [registerData, setRegisterData] = useState(initialRegisterData);
+
+  /** Algorithm for user registeration
+   * 1. validate data
+   * 2. save data into localstorage
+   * 3. display success message
+   * 4. clear register form
+   * 5. redirect to home page
+   */
+  
+  const registerUser = (e) => {
+    e.preventDefault();
+    // Validation => homework
+    let lsRegister = JSON.parse(localStorage.getItem('users'));
+    if(lsRegister == null){
+      lsRegister = [];
+    }
+    lsRegister.push(registerData);
+    localStorage.setItem('users', JSON.stringify(lsRegister));
+    localStorage.setItem('user-session',JSON.stringify(registerData));
+    setUsername(registerData.username)
+    alert("You have successfully registered as " + registerData.username);
+    setRegisterData(initialRegisterData);
+    setIsLogin(true);
+  }
+
+  const initialLoginData = {
+    username:"",
+    password:""
+  };
+  const [loginData, setLoginData] = useState(initialLoginData);
+
+  /** Algorithm for user login
+   * 1. validate data
+   * 2. check username and password
+   * 3. display success or error message
+   * 4. clear login form
+   * 5. redirect to home page
+   */
+
+  const loginUser = (e) => {
+    e.preventDefault();
+    // Validation => homework
+
+    const users = JSON.parse(localStorage.getItem('users'));
+    if( users == null || users.length == 0){
+      alert("No user found as " + loginData.username + ". Click here to register.");
+    }
+    const user = users.filter((u) => {
+      return (u.username == loginData.username && u.password == loginData.password)
+    });
+    console.log(user)
+
+    if(user == null || user.length == 0){
+      alert("Wrong username and password");
+      return 0;
+    }
+
+    alert("You have successfully logged in as " + loginData.username);
+    setLoginData(initialLoginData);
+    localStorage.setItem('user-session',JSON.stringify(user[0]));
+    setUsername(user[0].username)
+    setIsLogin(true);
+  }
+
+  /** Algorithm for user logout
+   * 1. remove user-session
+   * 2. display success message
+   * 3. redirect login form
+   */
+  const logoutUser = () => {
+    localStorage.removeItem('user-session');
+    setIsLogin(false);
+    setShowRegister(false);
+    alert("You are successfully logged out!");
+  }
+
   return (
-    <div className="container">
+    <div className="container mt-3">
       {
         isLogin ? 
+        // home page
         <>
           <Navbar expand="lg" className="bg-body-tertiary">
             <Container>
@@ -25,34 +113,50 @@ function App() {
                 <Nav className="me-auto">
                   <Link style={{ textDecoration: "none", color: "gray" }} to="/calculator">Calculator</Link>
                 </Nav>
+                <Nav className="me-auto">
+                  <Button onClick={logoutUser}>Logout</Button>
+                </Nav>
               </Navbar.Collapse>
             </Container>
           </Navbar>
           <Routes>
+            <Route path='/' element={<Home username={username}/>} />
             <Route path='/calculator' element={<Calculator />} />
           </Routes>
         </> 
         : 
+        // login and register
         <>
           {
             showRegister ? 
               <div className="row register">
-                <div className="col-md-4">
+                <div className="col-md-4" style={{margin:"0 auto"}}>
                   <div className="card">
                     <div className="card-header">Register</div>
                     <div className="card-body">
-                      <Form>
+                      <Form onSubmit={registerUser}>
+                        {/* name */}
                         <Form.Group className="mb-3" controlId="formBasicEmail">
-                          <Form.Label>Email</Form.Label>
-                          <Form.Control type="email" placeholder="Enter email" />
+                          <Form.Label>Name</Form.Label>
+                          <Form.Control type="text" placeholder="Enter Name" value={registerData.name} onChange={(e)=>setRegisterData({...registerData,name: e.target.value})}/>
+                          {/* <Form.Text className="text-muted">
+                            We'll never share your email with anyone else.
+                          </Form.Text> */}
+                        </Form.Group>
+
+                        {/* username */}
+                        <Form.Group className="mb-3" controlId="formBasicEmail">
+                          <Form.Label>Username</Form.Label>
+                          <Form.Control type="text" placeholder="Enter Username" value={registerData.username} onChange={(e)=>setRegisterData({...registerData,username: e.target.value})}/>
                           {/* <Form.Text className="text-muted">
                             We'll never share your email with anyone else.
                           </Form.Text> */}
                         </Form.Group>
     
+                        {/* password */}
                         <Form.Group className="mb-3" controlId="formBasicPassword">
                           <Form.Label>Password</Form.Label>
-                          <Form.Control type="password" placeholder="Password" />
+                          <Form.Control type="password" placeholder="Password" value={registerData.password} onChange={(e)=>setRegisterData({...registerData,password: e.target.value})}/>
                         </Form.Group>
                         {/* <Form.Group className="mb-3" controlId="formBasicCheckbox">
                           <Form.Check type="checkbox" label="Check me out" />
@@ -61,21 +165,21 @@ function App() {
                           Register
                         </Button>
                       </Form>
-                      <Link>Click here to register.</Link>
+                      <Link onClick={()=>setShowRegister(false)}>Already have an account click here to login.</Link>
                     </div>
                   </div>
                 </div>
               </div>
             :
               <div className="row login">
-                <div className="col-md-4">
+                <div className="col-md-4" style={{margin:"0 auto"}}>
                   <div className="card">
                     <div className="card-header">Login</div>
                     <div className="card-body">
-                      <Form>
+                      <Form onSubmit={loginUser}>
                         <Form.Group className="mb-3" controlId="formBasicEmail">
-                          <Form.Label>Email</Form.Label>
-                          <Form.Control type="email" placeholder="Enter email" />
+                          <Form.Label>Username</Form.Label>
+                          <Form.Control type="text" placeholder="Enter username" value={loginData.username} onChange={(e)=>setLoginData({...loginData,username: e.target.value})} />
                           {/* <Form.Text className="text-muted">
                             We'll never share your email with anyone else.
                           </Form.Text> */}
@@ -83,7 +187,7 @@ function App() {
     
                         <Form.Group className="mb-3" controlId="formBasicPassword">
                           <Form.Label>Password</Form.Label>
-                          <Form.Control type="password" placeholder="Password" />
+                          <Form.Control type="password" placeholder="Password" value={loginData.password} onChange={(e)=>setLoginData({...loginData,password: e.target.value})} />
                         </Form.Group>
                         {/* <Form.Group className="mb-3" controlId="formBasicCheckbox">
                           <Form.Check type="checkbox" label="Check me out" />
@@ -92,7 +196,7 @@ function App() {
                           Login
                         </Button>
                       </Form>
-                      <Link>Click here to register.</Link>
+                      <Link onClick={()=>setShowRegister(true)}>Click here to register.</Link>
                     </div>
                   </div>
                 </div>
