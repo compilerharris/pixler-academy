@@ -65,7 +65,6 @@ function App() {
   const loginUser = (e) => {
     e.preventDefault();
     // Validation => homework
-
     const users = JSON.parse(localStorage.getItem('users'));
     if( users == null || users.length == 0){
       alert("No user found as " + loginData.username + ". Click here to register.");
@@ -73,13 +72,10 @@ function App() {
     const user = users.filter((u) => {
       return (u.username == loginData.username && u.password == loginData.password)
     });
-    console.log(user)
-
     if(user == null || user.length == 0){
       alert("Wrong username and password");
       return 0;
     }
-
     alert("You have successfully logged in as " + loginData.username);
     setLoginData(initialLoginData);
     localStorage.setItem('user-session',JSON.stringify(user[0]));
@@ -139,18 +135,12 @@ function App() {
                         <Form.Group className="mb-3" controlId="formBasicEmail">
                           <Form.Label>Name</Form.Label>
                           <Form.Control type="text" placeholder="Enter Name" value={registerData.name} onChange={(e)=>setRegisterData({...registerData,name: e.target.value})}/>
-                          {/* <Form.Text className="text-muted">
-                            We'll never share your email with anyone else.
-                          </Form.Text> */}
                         </Form.Group>
 
                         {/* username */}
                         <Form.Group className="mb-3" controlId="formBasicEmail">
                           <Form.Label>Username</Form.Label>
                           <Form.Control type="text" placeholder="Enter Username" value={registerData.username} onChange={(e)=>setRegisterData({...registerData,username: e.target.value})}/>
-                          {/* <Form.Text className="text-muted">
-                            We'll never share your email with anyone else.
-                          </Form.Text> */}
                         </Form.Group>
     
                         {/* password */}
@@ -158,9 +148,6 @@ function App() {
                           <Form.Label>Password</Form.Label>
                           <Form.Control type="password" placeholder="Password" value={registerData.password} onChange={(e)=>setRegisterData({...registerData,password: e.target.value})}/>
                         </Form.Group>
-                        {/* <Form.Group className="mb-3" controlId="formBasicCheckbox">
-                          <Form.Check type="checkbox" label="Check me out" />
-                        </Form.Group> */}
                         <Button variant="primary" type="submit">
                           Register
                         </Button>
@@ -180,18 +167,11 @@ function App() {
                         <Form.Group className="mb-3" controlId="formBasicEmail">
                           <Form.Label>Username</Form.Label>
                           <Form.Control type="text" placeholder="Enter username" value={loginData.username} onChange={(e)=>setLoginData({...loginData,username: e.target.value})} />
-                          {/* <Form.Text className="text-muted">
-                            We'll never share your email with anyone else.
-                          </Form.Text> */}
                         </Form.Group>
-    
                         <Form.Group className="mb-3" controlId="formBasicPassword">
                           <Form.Label>Password</Form.Label>
                           <Form.Control type="password" placeholder="Password" value={loginData.password} onChange={(e)=>setLoginData({...loginData,password: e.target.value})} />
                         </Form.Group>
-                        {/* <Form.Group className="mb-3" controlId="formBasicCheckbox">
-                          <Form.Check type="checkbox" label="Check me out" />
-                        </Form.Group> */}
                         <Button variant="primary" type="submit">
                           Login
                         </Button>
