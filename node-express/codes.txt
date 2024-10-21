@@ -1,0 +1,413 @@
+Day 1: Node.js Basics
+    1.1 Simple Node.js Server
+
+        // app.js
+        const http = require('http');
+
+        const server = http.createServer((req, res) => {
+            res.statusCode = 200;
+            res.setHeader('Content-Type', 'text/plain');
+            res.end('Hello, World!');
+        });
+
+        server.listen(3000, () => {
+            console.log('Server running at http://localhost:3000/');
+        });
+
+    1.2 File System Operations
+        // file-operations.js
+        const fs = require('fs');
+
+        // Write to a file
+        fs.writeFile('example.txt', 'This is Node.js!', (err) => {
+            if (err) throw err;
+            console.log('File written successfully.');
+
+            // Read from the file
+            fs.readFile('example.txt', 'utf8', (err, data) => {
+                if (err) throw err;
+                console.log('File contents:', data);
+            });
+        });
+        
+        // Create a File
+        fs.writeFile('newfile.txt', 'Hello, this is a new file!', (err) => {
+            if (err) throw err;
+            console.log('File created successfully.');
+        });
+
+        // Rename a File
+        fs.rename('newfile.txt', 'renamedfile.txt', (err) => {
+            if (err) throw err;
+            console.log('File renamed successfully.');
+        });
+
+        // Delete a File
+        fs.unlink('renamedfile.txt', (err) => {
+            if (err) throw err;
+            console.log('File deleted successfully.');
+        });
+
+Day 2: Express.js Basics
+    2.1 Setting Up Express and Basic Routing
+        // index.js
+        const express = require('express');
+        const app = express();
+        const PORT = 3000;
+
+        app.get('/', (req, res) => {
+            res.send('Welcome to Express!');
+        });
+
+        app.get('/about', (req, res) => {
+            res.send('About Us');
+        });
+
+        app.listen(PORT, () => {
+            console.log(`Server running on http://localhost:${PORT}`);
+        });
+
+Day 3: Middleware in Express
+    3.1 Using Built-In and Custom Middleware
+        // middleware-example.js
+        const express = require('express');
+        const app = express();
+        const PORT = 3000;
+
+        // Built-in middleware
+        app.use(express.json());
+
+        // Custom middleware
+        app.use((req, res, next) => {
+            console.log(`${req.method} request for '${req.url}'`);
+            next();
+        });
+
+        app.post('/data', (req, res) => {
+            console.log(req.body);
+            res.send('Data received');
+        });
+
+        app.listen(PORT, () => {
+            console.log(`Server running on http://localhost:${PORT}`);
+        });
+
+Day 4: MongoDB Introduction
+    4.1 Connecting to MongoDB Using Mongoose
+        // Install MongoDB and Mongoose: npm install mongoose
+        // mongo-connection.js
+        const mongoose = require('mongoose');
+
+        mongoose.connect('mongodb://127.0.0.1:27017/mydatabase', {
+            useNewUrlParser: true,
+            useUnifiedTopology: true,
+        }).then(() => {
+            console.log('Connected to MongoDB');
+        }).catch((err) => {
+            console.error('Connection error', err);
+        });
+
+    4.2 Define a Mongoose Schema and Model
+        // user.js
+        const mongoose = require('mongoose');
+
+        const userSchema = new mongoose.Schema({
+            name: String,
+            email: String,
+            age: Number
+        });
+
+        const User = mongoose.model('User', userSchema);
+
+        module.exports = User;
+
+Day 5: CRUD Operations
+    5.1 CRUD Routes in Express with Mongoose
+        // app.js
+        const express = require('express');
+        const mongoose = require('mongoose');
+        const User = require('./user');
+
+        mongoose.connect('mongodb://127.0.0.1:27017/mydatabase', {
+            useNewUrlParser: true,
+            useUnifiedTopology: true,
+        });
+
+        const app = express();
+        app.use(express.json());
+
+        // Create User
+        app.post('/users', async (req, res) => {
+            const user = new User(req.body);
+            await user.save();
+            res.send(user);
+        });
+
+        // Read Users
+        app.get('/users', async (req, res) => {
+            const users = await User.find();
+            res.send(users);
+        });
+
+        // Update User
+        app.put('/users/:id', async (req, res) => {
+            const user = await User.findByIdAndUpdate(req.params.id, req.body, { new: true });
+            res.send(user);
+        });
+
+        // Delete User
+        app.delete('/users/:id', async (req, res) => {
+            await User.findByIdAndDelete(req.params.id);
+            res.send({ message: 'User deleted' });
+        });
+
+        app.listen(3000, () => console.log('Server running on http://localhost:3000'));
+
+Day 6: REST API Development
+    6.1 Basic REST API Example
+        // product.js
+        const mongoose = require('mongoose');
+
+        const productSchema = new mongoose.Schema({
+            name: String,
+            price: Number,
+            category: String
+        });
+
+        const Product = mongoose.model('Product', productSchema);
+
+        module.exports = Product;
+
+    6.2 Express App with RESTful Endpoints
+        const express = require('express');
+        const mongoose = require('mongoose');
+        const Product = require('./product');
+
+        mongoose.connect('mongodb://127.0.0.1:27017/mydatabase', {
+            useNewUrlParser: true,
+            useUnifiedTopology: true,
+        });
+
+        const app = express();
+        app.use(express.json());
+
+        app.post('/products', async (req, res) => {
+            const product = new Product(req.body);
+            await product.save();
+            res.send(product);
+        });
+
+        app.get('/products', async (req, res) => {
+            const products = await Product.find();
+            res.send(products);
+        });
+
+        app.listen(3000, () => console.log('Server running on http://localhost:3000'));
+
+Day 7: Asynchronous Programming
+    7.1 What is asynchronous programming?
+    7.2 Blocking vs Non-blocking code in Node.js
+    7.3 Callbacks: Understanding how to work with callback functions.
+    7.4 Promises: Writing promises and chaining them.
+    7.5 Async/Await: Writing clean asynchronous code using async and await.
+    Example Code:
+        Callback Example
+            const fs = require('fs');
+
+            // Reading file using callback
+            fs.readFile('example.txt', 'utf8', (err, data) => {
+                if (err) {
+                    console.error(err);
+                    return;
+                }
+                console.log(data);
+            });
+
+        Promises Example
+            const fs = require('fs').promises;
+
+            // Reading file using Promise
+            fs.readFile('example.txt', 'utf8')
+                .then(data => console.log(data))
+                .catch(err => console.error(err));
+
+        Async/Await Example
+            const fs = require('fs').promises;
+
+            async function readFile() {
+                try {
+                    const data = await fs.readFile('example.txt', 'utf8');
+                    console.log(data);
+                } catch (err) {
+                    console.error(err);
+                }
+            }
+
+            readFile();
+
+        API Fetch Example Using Axios and Async/Await
+            const axios = require('axios');
+
+            async function fetchData() {
+                try {
+                    const response = await axios.get('https://api.github.com/users/octocat');
+                    console.log(response.data);
+                } catch (error) {
+                    console.error(error);
+                }
+            }
+
+            fetchData();
+
+Day 8: Mini Project - Todo App (Complete CRUD Application)
+    In this mini-project, we'll build a basic Todo application using the following technologies:
+
+    MongoDB for storing todos
+    Express for the backend
+    React for the frontend
+    Node.js for handling server-side code
+    8.1 Backend - Complete CRUD for Todo Application
+        Step 1: Create the Mongoose Schema and Model
+            // models/Todo.js
+            const mongoose = require('mongoose');
+
+            const todoSchema = new mongoose.Schema({
+                title: { type: String, required: true },
+                completed: { type: Boolean, default: false }
+            });
+
+            const Todo = mongoose.model('Todo', todoSchema);
+
+            module.exports = Todo;
+
+        Step 2: Create the Express Server
+            // server.js
+            const express = require('express');
+            const mongoose = require('mongoose');
+            const Todo = require('./models/Todo');
+
+            mongoose.connect('mongodb://127.0.0.1:27017/todoapp', {
+                useNewUrlParser: true,
+                useUnifiedTopology: true,
+            });
+
+            const app = express();
+            app.use(express.json());
+
+            // Create a new Todo
+            app.post('/todos', async (req, res) => {
+                const todo = new Todo({
+                    title: req.body.title
+                });
+                await todo.save();
+                res.send(todo);
+            });
+
+            // Get all Todos
+            app.get('/todos', async (req, res) => {
+                const todos = await Todo.find();
+                res.send(todos);
+            });
+
+            // Update a Todo by ID
+            app.put('/todos/:id', async (req, res) => {
+                const todo = await Todo.findByIdAndUpdate(req.params.id, req.body, { new: true });
+                res.send(todo);
+            });
+
+            // Delete a Todo by ID
+            app.delete('/todos/:id', async (req, res) => {
+                await Todo.findByIdAndDelete(req.params.id);
+                res.send({ message: 'Todo deleted' });
+            });
+
+            app.listen(3000, () => {
+                console.log('Server running on http://localhost:3000');
+            });
+
+    8.2 Frontend - React Todo Application
+        Step 1: Setup React Application
+
+            Use npx create-react-app todo-frontend
+            Make sure you have Axios installed: npm install axios
+
+        Step 2: Create Components
+            // src/App.js
+            import React, { useState, useEffect } from 'react';
+            import axios from 'axios';
+
+            const App = () => {
+                const [todos, setTodos] = useState([]);
+                const [newTodo, setNewTodo] = useState('');
+
+                // Fetch Todos from Backend
+                const fetchTodos = async () => {
+                    const response = await axios.get('http://localhost:3000/todos');
+                    setTodos(response.data);
+                };
+
+                useEffect(() => {
+                    fetchTodos();
+                }, []);
+
+                // Add a new Todo
+                const addTodo = async () => {
+                    const response = await axios.post('http://localhost:3000/todos', { title: newTodo });
+                    setTodos([...todos, response.data]);
+                    setNewTodo('');
+                };
+
+                // Delete a Todo
+                const deleteTodo = async (id) => {
+                    await axios.delete(`http://localhost:3000/todos/${id}`);
+                    setTodos(todos.filter(todo => todo._id !== id));
+                };
+
+                // Update Todo
+                const toggleComplete = async (id, completed) => {
+                    const response = await axios.put(`http://localhost:3000/todos/${id}`, { completed: !completed });
+                    setTodos(todos.map(todo => todo._id === id ? response.data : todo));
+                };
+
+                return (
+                    <div className="App">
+                        <h1>Todo App</h1>
+                        <input
+                            type="text"
+                            value={newTodo}
+                            onChange={(e) => setNewTodo(e.target.value)}
+                            placeholder="Add new todo"
+                        />
+                        <button onClick={addTodo}>Add</button>
+                        <ul>
+                            {todos.map(todo => (
+                                <li key={todo._id}>
+                                    <input
+                                        type="checkbox"
+                                        checked={todo.completed}
+                                        onChange={() => toggleComplete(todo._id, todo.completed)}
+                                    />
+                                    {todo.title}
+                                    <button onClick={() => deleteTodo(todo._id)}>Delete</button>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                );
+            };
+
+            export default App;
+
+    8.3 Connecting Frontend and Backend
+        Make sure both the frontend and backend servers are running:
+            Backend: node server.js (Should be running on localhost:3000)
+            Frontend: npm start (React App on localhost:3001)
+        You may need to configure CORS in the backend:
+            // server.js
+            const cors = require('cors');
+            app.use(cors());
+
+    Summary of Day 8:
+        Backend: Full CRUD for Todos with Express and Mongoose.
+        Frontend: React app that connects to the backend, adding, displaying, updating, and deleting Todos.
+        Integration: How to connect React with Express backend using Axios.

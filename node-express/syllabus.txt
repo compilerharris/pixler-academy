@@ -1,0 +1,34 @@
+*** Nodes | MongoDB | Express Syllabus ***
+
+- Node.js Basics:
+    1. Simple Node.js Server
+    2. File System Operations
+
+- Express.js Basics
+    1. Setting Up Express and Basic Routing
+
+- Middleware in Express
+    1. Using Built-In and Custom Middleware
+
+- MongoDB Introduction
+    1. Connecting to MongoDB Using Mongoose
+    2. Define a Mongoose Schema and Model
+
+- CRUD Operations
+    1. CRUD Routes in Express with Mongoose
+
+- REST API Development
+    1. Basic REST API Example
+    2. Express App with RESTful Endpoints
+
+- Asynchronous Programming
+    1. What is asynchronous programming?
+    2. Blocking vs Non-blocking code in Node.js
+    3. Callbacks: Understanding how to work with callback functions.
+    4. Promises: Writing promises and chaining them.
+    5. Async/Await: Writing clean asynchronous code using async and await.
+
+
+- Activity:
+
+1. Mini Project - Todo App (Complete CRUD Application)
