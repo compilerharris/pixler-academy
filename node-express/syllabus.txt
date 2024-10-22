@@ -1,5 +1,7 @@
 *** Nodes | MongoDB | Express Syllabus ***
 
+- MERN stack architecture
+
 - Node.js Basics:
     1. Simple Node.js Server
     2. File System Operations

@@ -1,7 +1,5 @@
-- MERN stack architecture
-
 - Node.js Basics:
-    1. Simple Node.js Server
+    2. Simple Node.js Server
 
     code:
         index.js
