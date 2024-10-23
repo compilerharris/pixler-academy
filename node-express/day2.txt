@@ -4,14 +4,36 @@
     code:
         index.js
             ***
-                const http = require('http');
-                const server = http.createServer((req, res) => {
-                    res.statusCode = 200;
-                    res.setHeader('Content-Type', 'text/plain');
-                    res.end('Hello, World!');
+                // file-operations.js
+                const fs = require('fs');
+
+                // Write to a file
+                fs.writeFile('example.txt', 'This is Node.js!', (err) => {
+                    if (err) throw err;
+                    console.log('File written successfully.');
                 });
 
-                server.listen(3000, () => {
-                    console.log('Server running at http://localhost:3000/');
+                // Read from the file
+                fs.readFile('example.txt', 'utf8', (err, data) => {
+                    if (err) throw err;
+                    console.log('File contents:', data);
+                });
+                
+                // Create a File
+                fs.writeFile('newfile.txt', 'Hello, this is a new file!', (err) => {
+                    if (err) throw err;
+                    console.log('File created successfully.');
+                });
+
+                // Rename a File
+                fs.rename('newfile.txt', 'renamedfile.txt', (err) => {
+                    if (err) throw err;
+                    console.log('File renamed successfully.');
+                });
+
+                // Delete a File
+                fs.unlink('renamedfile.txt', (err) => {
+                    if (err) throw err;
+                    console.log('File deleted successfully.');
                 });
             ***
